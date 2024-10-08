@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listagem de Usuários</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Análises</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Cadastros
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="user.html">Usuários</a></li>
+              <li><a class="dropdown-item" href="causes.html">Tipo de Causa</a></li>
+              <li><a class="dropdown-item" href="shed.html">Galpões</a></li>
+              <li><a class="dropdown-item" href="farmers.html">Integrados</a></li>
+              <li><a class="dropdown-item" href="analysis.html">Análises</a></li>
+              <li><a class="dropdown-item" href="planning.html">Planejamento</a></li>
+              <li><a class="dropdown-item" href="catch.html">Equipe de Apanho</a></li>
+              <li><a class="dropdown-item" href="config.html">Configuração</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="dif.html">DIF</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="inspection.html">Inspeção</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="result.html">Resultados</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <h1 class="text-center">Listagem de Usuários</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">Adicionar Usuário</button>
+    <hr/>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Ações</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>João Silva</td>
+          <td>joao@example.com</td>
+          <td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" onclick="populateModal('João Silva', 'joao@example.com')">Editar</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Maria Oliveira</td>
+          <td>maria@example.com</td>
+          <td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" onclick="populateModal('Maria Oliveira', 'maria@example.com')">Editar</button>
+          </td>
+        </tr>
+        <!-- Adicione mais linhas conforme necessário -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalLabel">Editar Usuário</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="userName" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="userName">
+            </div>
+            <div class="mb-3">
+              <label for="userEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="userEmail">
+            </div>
+            <div class="mb-3">
+              <label for="userPassword" class="form-label">Senha</label>
+              <input type="password" class="form-control" id="userPassword">
+            </div>
+            <div class="mb-3">
+              <label for="userPasswordConfirm" class="form-label">Confirme a senha</label>
+              <input type="password" class="form-control" id="userPasswordConfirm">
+            </div>
+            <div>
+              <label for="userRole" class="form-label">Função</label>
+              <select class="form-select" id="userRole">
+                <option selected>Selecione uma função</option>
+                <option value="1">Administrador</option>
+                <option value="2">Usuário</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar mudanças</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function populateModal(name, email) {
+      document.getElementById('userName').value = name;
+      document.getElementById('userEmail').value = email;
+    }
+  </script>
+</body>
+</html>

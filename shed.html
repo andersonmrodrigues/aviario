@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Galpão</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Análises</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Cadastros
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="user.html">Usuários</a></li>
+                <li><a class="dropdown-item" href="causes.html">Tipo de Causa</a></li>
+                <li><a class="dropdown-item" href="shed.html">Galpões</a></li>
+                <li><a class="dropdown-item" href="farmers.html">Integrados</a></li>
+                <li><a class="dropdown-item" href="analysis.html">Análises</a></li>
+                <li><a class="dropdown-item" href="planning.html">Planejamento</a></li>
+                <li><a class="dropdown-item" href="catch.html">Equipe de Apanho</a></li>
+                <li><a class="dropdown-item" href="config.html">Configuração</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="dif.html">DIF</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="inspection.html">Inspeção</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <h1 class="text-center">Cadastro de Galpão</h1>
+      <button
+        type="button"
+        class="btn btn-primary mb-3"
+        data-bs-toggle="modal"
+        data-bs-target="#warehouseModal"
+      >
+        Adicionar Galpão
+      </button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Galpão</th>
+            <th scope="col">Capacidade</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="warehouseList">
+          <tr>
+            <td>1</td>
+            <td>Galpão A</td>
+            <td>Descrição do Galpão A</td>
+            <td>Criador A</td>
+            <td>1000</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#warehouseModal"
+                onclick="editWarehouse(0)"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Galpão B</td>
+            <td>Descrição do Galpão B</td>
+            <td>Criador B</td>
+            <td>1000</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#warehouseModal"
+                onclick="editWarehouse(1)"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal de Cadastro de Galpão -->
+    <div
+      class="modal fade"
+      id="warehouseModal"
+      tabindex="-1"
+      aria-labelledby="warehouseModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="warehouseModalLabel">
+              Cadastrar Galpão
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="warehouseForm">
+              <div class="mb-3">
+                <label for="warehouseName" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="warehouseName" />
+              </div>
+              <div class="mb-3">
+                <label for="warehouseDescription" class="form-label"
+                  >Descrição</label
+                >
+                <textarea
+                  class="form-control"
+                  id="warehouseDescription"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="warehouseFarmer" class="form-label">Criador</label>
+                <select class="form-control" id="warehouseFarmer">
+                  <option value="farmerA">Criador A</option>
+                  <option value="farmerB">Criador B</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="warehouseCapacity" class="form-label">Capacidade</label>
+                <input type="number" class="form-control" id="warehouseCapacity" value="1000"/>
+              </div>
+                
+              <h5>Scores</h5>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Qtd de Problemas (%)</th>
+                    <th scope="col">Vel. de Abate (Por min.)</th>
+                    <th scope="col">Score Ideal</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="scoreList">
+                  <!-- Exemplo de Scores fixos -->
+                  <tr>
+                    <td>Score A</td>
+                    <td>5%</td>
+                    <td>180</td>
+                    <td>Verdadeiro</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        onclick="editScore(0)"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        onclick="removScore(0)"
+                      >
+                        Remover
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Score B</td>
+                    <td>10</td>
+                    <td>165</td>
+                    <td>Falso</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        onclick="editScore(1)"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        onclick="removScore(1)"
+                      >
+                        Remover
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#scoreModal"
+              >
+                Adicionar Score
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="saveWarehouse()"
+            >
+              Salvar Galpão
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Cadastro de Score -->
+    <div
+      class="modal fade"
+      id="scoreModal"
+      tabindex="-1"
+      aria-labelledby="scoreModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="scoreModalLabel">Adicionar Score</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="scoreForm">
+              <div class="mb-3">
+                <label for="scoreName" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="scoreName" />
+              </div>
+              <div class="mb-3">
+                <label for="scoreProblems" class="form-label"
+                  >Quantidade de Problemas</label
+                >
+                <input type="number" class="form-control" id="scoreProblems" />
+              </div>
+              <div class="mb-3">
+                <label for="scoreSpeed" class="form-label"
+                  >Velocidade de Abate</label
+                >
+                <input type="number" class="form-control" id="scoreSpeed" />
+              </div>
+              <div class="mb-3">
+                <label for="scoreIdeal" class="form-label">Score Ideal</label>
+                <select class="form-control" id="scoreIdeal">
+                  <option value="true">Verdadeiro</option>
+                  <option value="false">Falso</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button type="button" class="btn btn-primary" onclick="addScore()">
+              Salvar Score
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let scores = [
+        { name: "Score A", problems: 5, speed: 180, ideal: true },
+        { name: "Score B", problems: 10, speed: 165, ideal: false },
+      ];
+
+      function addScore() {
+        const scoreName = document.getElementById("scoreName").value;
+        const scoreProblems = document.getElementById("scoreProblems").value;
+        const scoreSpeed = document.getElementById("scoreSpeed").value;
+        const scoreIdeal =
+          document.getElementById("scoreIdeal").value === "true";
+
+        scores.push({
+          name: scoreName,
+          problems: scoreProblems,
+          speed: scoreSpeed,
+          ideal: scoreIdeal,
+        });
+        updatScoreTable();
+        const scoreModal = bootstrap.Modal.getInstance(
+          document.getElementById("scoreModal")
+        );
+        scoreModal.hide();
+      }
+
+      function updatScoreTable() {
+        const scoreList = document.getElementById("scoreList");
+        scoreList.innerHTML = "";
+
+        scores.forEach((score, index) => {
+          scoreList.innerHTML += `
+          <tr>
+            <td>${score.name}</td>
+            <td>${score.problems}</td>
+            <td>${score.speed}</td>
+            <td>${score.ideal ? "Verdadeiro" : "Falso"}</td>
+            <td>
+              <button type="button" class="btn btn-primary btn-sm" onclick="editScore(${index})">Editar</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removScore(${index})">Remover</button>
+            </td>
+          </tr>
+        `;
+        });
+      }
+
+      function editScore(index) {
+        const score = scores[index];
+        document.getElementById("scoreName").value = score.name;
+        document.getElementById("scoreProblems").value = score.problems;
+        document.getElementById("scoreSpeed").value = score.speed;
+        document.getElementById("scoreIdeal").value = score.ideal;
+
+        const scoreModal = new bootstrap.Modal(
+          document.getElementById("scoreModal")
+        );
+        scoreModal.show();
+
+        scores.splice(index, 1);
+      }
+
+      function removScore(index) {
+        scores.splice(index, 1);
+        updatScoreTable();
+      }
+
+      function saveWarehouse() {
+        const warehouseName = document.getElementById("warehouseName").value;
+        const warehouseDescription = document.getElementById(
+          "warehouseDescription"
+        ).value;
+
+        const warehouseList = document.getElementById("warehouseList");
+        warehouseList.innerHTML += `
+        <tr>
+          <td>${warehouseList.children.length + 1}</td>
+          <td>${warehouseName}</td>
+          <td>${warehouseDescription}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#warehouseModal" onclick="editWarehouse(${
+              warehouseList.children.length
+            })">Editar</button>
+          </td>
+        </tr>
+      `;
+
+        const warehouseModal = bootstrap.Modal.getInstance(
+          document.getElementById("warehouseModal")
+        );
+        warehouseModal.hide();
+        document.getElementById("warehouseForm").reset();
+        scores = [
+          { name: "Score A", problems: 5, speed: 10, ideal: true },
+          { name: "Score B", problems: 10, speed: 20, ideal: false },
+        ];
+        updatScoreTable();
+      }
+
+      function editWarehouse(index) {
+        const row = document.getElementById("warehouseList").children[index];
+        document.getElementById("warehouseName").value =
+          row.children[1].textContent;
+        document.getElementById("warehouseDescription").value =
+          row.children[2].textContent;
+        const warehouseModal = new bootstrap.Modal(
+          document.getElementById("warehouseModal")
+        );
+        warehouseModal.show();
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updatScoreTable();
+      });
+    </script>
+  </body>
+</html>

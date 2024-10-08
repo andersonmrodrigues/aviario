@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Análises</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Análises</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Cadastros
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="user.html">Usuários</a></li>
+              <li><a class="dropdown-item" href="causes.html">Tipo de Causa</a></li>
+              <li><a class="dropdown-item" href="shed.html">Galpões</a></li>
+              <li><a class="dropdown-item" href="farmers.html">Integrados</a></li>
+              <li><a class="dropdown-item" href="analysis.html">Análises</a></li>
+              <li><a class="dropdown-item" href="planning.html">Planejamento</a></li>
+              <li><a class="dropdown-item" href="catch.html">Equipe de Apanho</a></li>
+              <li><a class="dropdown-item" href="config.html">Configuração</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="dif.html">DIF</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="inspection.html">Inspeção</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="result.html">Resultados</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <h1 class="text-center">Análises Realizadas</h1>
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAnalysisModal">Adicionar Análise</button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Data</th>
+          <th scope="col">Criador</th>
+          <th scope="col">Galpão</th>
+          <th scope="col">Tipos de Causas</th>
+          <th scope="col">Score</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="analysisList">
+        <!-- Análises pré-existentes -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de Adicionar Análise -->
+  <div class="modal fade" id="addAnalysisModal" tabindex="-1" aria-labelledby="addAnalysisModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAnalysisModalLabel">Adicionar Análise</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="analysisForm">
+            <div class="mb-3">
+              <label for="analysisName" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="analysisName" required>
+            </div>
+            <div class="mb-3">
+              <label for="analysisDate" class="form-label">Data</label>
+              <input type="date" class="form-control" id="analysisDate" required>
+            </div>
+            <div class="mb-3">
+              <label for="creatorSelect" class="form-label">Criador</label>
+              <select class="form-select" id="creatorSelect" required>
+                <!-- Integrados cadastrados -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="shedSelect" class="form-label">Galpão</label>
+              <select class="form-select" id="shedSelect" required>
+                <!-- Galpões cadastrados -->
+              </select>
+            </div>
+            <h5>Tipos de Causas</h5>
+            <button type="button" class="btn btn-secondary mb-3" onclick="addCause()">Adicionar Tipo de Causa</button>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Problemas</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="causeList">
+                <!-- Tipos de causas serão listados aqui -->
+              </tbody>
+            </table>
+            <div class="mb-3">
+              <label for="analysisScore" class="form-label">Score</label>
+              <input type="text" class="form-control" id="analysisScore" value="2" readonly>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" onclick="saveAnalysis()">Salvar Análise</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Adicionar Tipo de Causa -->
+  <div class="modal fade" id="causeModal" tabindex="-1" aria-labelledby="causeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="causeModalLabel">Adicionar Tipo de Causa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="causeForm">
+            <div class="mb-3">
+              <label for="causeSelect" class="form-label">Selecione um Tipo de Causa</label>
+              <select class="form-select" id="causeSelect">
+                <!-- Tipos de causas cadastrados -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="causeQuantity" class="form-label">Quantidade</label>
+              <input type="number" class="form-control" id="causeQuantity" required>
+            </div>
+            <div class="mb-3">
+              <label for="causeProblems" class="form-label">Problemas</label>
+              <input type="number" class="form-control" id="causeProblems" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" onclick="saveCause()">Adicionar Tipo de Causa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Visualização de Análise -->
+  <div class="modal fade" id="viewAnalysisModal" tabindex="-1" aria-labelledby="viewAnalysisModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewAnalysisModalLabel">Detalhes da Análise</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 id="viewAnalysisName"></h5>
+          <p id="viewAnalysisDate"></p>
+          <p id="viewAnalysisCreator"></p>
+          <p id="viewAnalysisShed"></p>
+          <p id="viewAnalysisScore"></p>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Nome do Tipo de Causa</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Problemas</th>
+                <th scope="col">Percentual de Problemas</th>
+              </tr>
+            </thead>
+            <tbody id="viewCauseList">
+              <!-- Detalhes das causas serão listados aqui -->
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    let analyses = [
+      { name: 'Análise A', date: '2024-07-14', score: 3, creator: 0, shed: 0, causes: [{ type: 0, quantity: 100, problems: 5 }, { type: 1, quantity: 150, problems: 10 }] }
+    ];
+
+    let causes = [
+      { name: 'Lesão de Pele', description: 'Descrição de Lesão de Pele' },
+      { name: 'Calo de Peito', description: 'Descrição de Calo de Peito' }
+    ];
+
+    let creators = [
+      { name: 'Criador 1', fantasyName: 'Nome Fantasia 1', state: 'Estado 1', city: 'Cidade 1', cnpj: '00.000.000/0000-01' },
+      { name: 'Criador 2', fantasyName: 'Nome Fantasia 2', state: 'Estado 2', city: 'Cidade 2', cnpj: '00.000.000/0000-02' }
+    ];
+
+    let sheds = [
+      { name: 'Galpão 1', description: 'Descrição do Galpão 1' },
+      { name: 'Galpão 2', description: 'Descrição do Galpão 2' }
+    ];
+
+    function updateCauseSelect() {
+      const causeSelect = document.getElementById('causeSelect');
+      causeSelect.innerHTML = '';
+      causes.forEach((cause, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = cause.name;
+        causeSelect.appendChild(option);
+      });
+    }
+
+    function updateCreatorSelect() {
+      const creatorSelect = document.getElementById('creatorSelect');
+      creatorSelect.innerHTML = '';
+      creators.forEach((creator, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = creator.fantasyName;
+        creatorSelect.appendChild(option);
+      });
+    }
+
+    function updateShedSelect() {
+      const shedSelect = document.getElementById('shedSelect');
+      shedSelect.innerHTML = '';
+      sheds.forEach((shed, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = shed.name;
+        shedSelect.appendChild(option);
+      });
+    }
+
+    function saveAnalysis() {
+      const analysisName = document.getElementById('analysisName').value;
+      const analysisDate = document.getElementById('analysisDate').value;
+      const analysisScore = document.getElementById('analysisScore').value;
+      const creatorIndex = document.getElementById('creatorSelect').value;
+      const shedIndex = document.getElementById('shedSelect').value;
+
+      const causeList = [];
+      document.querySelectorAll('#causeList tr').forEach(row => {
+        const causeIndex = row.getAttribute('data-cause-index');
+        const quantity = row.getAttribute('data-quantity');
+        const problems = row.getAttribute('data-problems');
+        causeList.push({ type: Number(causeIndex), quantity: Number(quantity), problems: Number(problems) });
+      });
+
+      analyses.push({
+        name: analysisName,
+        date: analysisDate,
+        score: Number(analysisScore),
+        creator: Number(creatorIndex),
+        shed: Number(shedIndex),
+        causes: causeList
+      });
+
+      updateAnalysisTable();
+      const addAnalysisModal = bootstrap.Modal.getInstance(document.getElementById('addAnalysisModal'));
+      addAnalysisModal.hide();
+    }
+
+    function updateAnalysisTable() {
+      const analysisList = document.getElementById('analysisList');
+      analysisList.innerHTML = '';
+
+      analyses.forEach((analysis, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <th scope="row">${index + 1}</th>
+          <td>${analysis.name}</td>
+          <td>${analysis.date}</td>
+          <td>${creators[analysis.creator].fantasyName}</td>
+          <td>${sheds[analysis.shed].name}</td>
+          <td>${analysis.causes.length}</td>
+          <td>${analysis.score}</td>
+          <td>
+            <button type="button" class="btn btn-info btn-sm" onclick="viewAnalysis(${index})">Visualizar</button>
+          </td>
+        `;
+        analysisList.appendChild(row);
+      });
+    }
+
+    function addCause() {
+      updateCauseSelect();
+      const causeModal = new bootstrap.Modal(document.getElementById('causeModal'));
+      causeModal.show();
+    }
+
+    function saveCause() {
+      const causeIndex = document.getElementById('causeSelect').value;
+      const cause = causes[causeIndex];
+      const quantity = document.getElementById('causeQuantity').value;
+      const problems = document.getElementById('causeProblems').value;
+
+      const causeList = document.getElementById('causeList');
+      causeList.innerHTML += `
+        <tr data-cause-index="${causeIndex}" data-quantity="${quantity}" data-problems="${problems}">
+          <td>${cause.name}</td>
+          <td>${quantity}</td>
+          <td>${problems}</td>
+          <td>
+            <button type="button" class="btn btn-danger btn-sm" onclick="removeCause(this)">Remover</button>
+          </td>
+        </tr>
+      `;
+
+      const causeModal = bootstrap.Modal.getInstance(document.getElementById('causeModal'));
+      causeModal.hide();
+    }
+
+    function removeCause(button) {
+      const row = button.closest('tr');
+      row.remove();
+    }
+
+    function viewAnalysis(index) {
+      const analysis = analyses[index];
+      document.getElementById('viewAnalysisName').textContent = analysis.name;
+      document.getElementById('viewAnalysisDate').textContent = `Data: ${analysis.date}`;
+      document.getElementById('viewAnalysisCreator').textContent = `Criador: ${creators[analysis.creator].fantasyName}`;
+      document.getElementById('viewAnalysisShed').textContent = `Galpão: ${sheds[analysis.shed].name}`;
+      document.getElementById('viewAnalysisScore').textContent = `Score: ${analysis.score}`;
+
+      const viewCauseList = document.getElementById('viewCauseList');
+      viewCauseList.innerHTML = '';
+
+      analysis.causes.forEach(causeData => {
+        const cause = causes[causeData.type];
+        const percentage = ((causeData.problems / causeData.quantity) * 100).toFixed(2);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${cause.name}</td>
+          <td>${causeData.quantity}</td>
+          <td>${causeData.problems}</td>
+          <td>${percentage}%</td>
+        `;
+        viewCauseList.appendChild(row);
+      });
+
+      const viewAnalysisModal = new bootstrap.Modal(document.getElementById('viewAnalysisModal'));
+      viewAnalysisModal.show();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateAnalysisTable();
+      updateCreatorSelect();
+      updateShedSelect();
+    });
+  </script>
+</body>
+</html>

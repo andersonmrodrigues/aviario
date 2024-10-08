@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados e Simulações</title>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+  <style>
+    .table-total {
+      font-weight: bold;
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Análises</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Cadastros
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="user.html">Usuários</a></li>
+              <li><a class="dropdown-item" href="causes.html">Tipo de Causa</a></li>
+              <li><a class="dropdown-item" href="shed.html">Galpões</a></li>
+              <li><a class="dropdown-item" href="farmers.html">Integrados</a></li>
+              <li><a class="dropdown-item" href="analysis.html">Análises</a></li>
+              <li><a class="dropdown-item" href="planning.html">Planejamento</a></li>
+              <li><a class="dropdown-item" href="catch.html">Equipe de Apanho</a></li>
+              <li><a class="dropdown-item" href="config.html">Configuração</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="dif.html">DIF</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="inspection.html">Inspeção</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="result.html">Resultados</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="col-12 row">
+    <div class="col-9">
+        <div class="m-3">
+            <h2>Resultados e Simulações</h2>
+            
+            <!-- Formulário para Data e Galpão -->
+            <form id="simulationForm" class="mb-4">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="data">Data</label>
+                  <input type="date" class="form-control" id="data" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="galpao">Galpão</label>
+                  <input type="text" class="form-control" id="galpao" placeholder="Digite o galpão" required>
+                </div>
+              </div>
+              <hr/>
+              <button type="submit" class="btn btn-primary">Exibir Resultados</button>
+            </form>
+        
+            <!-- Tabela 1: Velocidades e Cálculos -->
+            <h4>Velocidades e Cálculos</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Nome do Score</th>
+                  <th>Velocidade por Minuto</th>
+                  <th>Percentual de Problema (%)</th>
+                  <th>Total de Abate por Hora</th>
+                </tr>
+              </thead>
+              <tbody id="table1Body">
+                <!-- Linhas de Exemplo -->
+                <tr>
+                  <td>A</td>
+                  <td>180</td>
+                  <td>5</td>
+                  <td>10800</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>165</td>
+                  <td>10</td>
+                  <td>9900</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>150</td>
+                    <td>15</td>
+                    <td>9000</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>140</td>
+                    <td>20</td>
+                    <td>8400</td>
+                </tr>
+                <!-- Mais Linhas podem ser adicionadas dinamicamente -->
+              </tbody>
+            </table>
+        
+            <!-- Tabela 2: Simulações -->
+            <h4>Simulações</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Nome do Integrado</th>
+                  <th>Score Executado</th>
+                  <th>Quantidade Programada de Abate</th>
+                  <th>Quantidade de Simulação</th>
+                  <th>Nome do Score de Simulação</th>
+                  <th>Tempo de Simulação (min)</th>
+                  <th>Tempo Programado (min)</th>
+                </tr>
+              </thead>
+              <tbody id="table2Body">
+                <!-- Exemplo de Linha -->
+                <tr>
+                  <td>01/09/2024</td>
+                  <td>Integrado A</td>
+                  <td>B</td>
+                  <td>25000</td>
+                  <td><input type="number" class="form-control" value="25000"></td>
+                  <td><input type="text" class="form-control" value="B"></td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                    <td>01/09/2024</td>
+                    <td>Integrado B</td>
+                    <td>A</td>
+                    <td>25000</td>
+                    <td><input type="number" class="form-control" value="25000"></td>
+                    <td><input type="text" class="form-control" value="A"></td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>01/09/2024</td>
+                    <td>Integrado C</td>
+                    <td>C</td>
+                    <td>25000</td>
+                    <td><input type="number" class="form-control" value="25000"></td>
+                    <td><input type="text" class="form-control" value="C"></td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>01/09/2024</td>
+                    <td>Integrado D</td>
+                    <td>D</td>
+                    <td>25000</td>
+                    <td><input type="number" class="form-control" value="0"></td>
+                    <td><input type="text" class="form-control" value="D"></td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <!-- Mais Linhas podem ser adicionadas dinamicamente -->
+              </tbody>
+              <tfoot>
+                <tr class="table-total">
+                  <td colspan="3">Totais</td>
+                  <td id="qtdAbateProg">0</td>
+                  <td id="qtdAbateSimulacao">0</td>
+                  <td></td>
+                  <td id="totalTempoSimulacao">0</td>
+                  <td id="totalTempoProgramado">0</td>
+                </tr>
+              </tfoot>
+            </table>
+        
+            <hr/>
+        
+          </div>
+    </div>
+    <div class="col-3">
+        <div class="container">
+            <h3>Tempo de Trabalho</h3>
+            <p>Carga Horária de Trabalho (minutos)</p> <input class="form-control" type="number" id="cargaHoraria" value="450" onchange="calcularTempoSimulacao()">
+            <hr/>
+        
+            <p><b>Tempo de Trabalho Programado:</b> <span id="totalTempoProgramadoCampo">0</span> minutos (<span id="totalTempoProgramadoCampoHoras">0</span> horas)</p>
+            <p><b>Tempo Extra de Trabalho do Programado:</b> <span id="totalTempoProgramadoCampoExtra"></span> minutos (<span id="totalTempoProgramadoCampoExtraHoras">0</span> horas)</p>
+            <hr/>
+            <p><b>Tempo de Trabalho Simulado:</b> <span id="totalTempoSimulacaoCampo">0</span> minutos (<span id="totalTempoSimulacaoCampoHoras">0</span> horas)</p>
+            <p><b>Tempo Extra de Trabalho do Simulado:</b> <span id="totalTempoSimulacaoCampoExtra"></span> minutos (<span id="totalTempoSimulacaoCampoExtraHoras">0</span> horas)</p>
+        </div>
+
+    </div>
+  </div>   
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.getElementById('simulationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Logica para exibir os resultados com base na data e galpão inseridos
+      const data = document.getElementById('data').value;
+      const galpao = document.getElementById('galpao').value;
+      console.log('Data:', data);
+      console.log('Galpão:', galpao);
+      
+      // Atualizar as tabelas conforme necessário...
+      // Exemplo de atualização dinâmica pode ser incluído aqui.
+    });
+
+    function calcularTempoSimulacao() {
+      const table1 = document.getElementById('table1Body').rows;
+      const table2 = document.getElementById('table2Body').rows;
+
+      let totalTempoSimulacao = 0;
+      let totalTempoProgramado = 0;
+      let totalQuantidadeProgramada = 0;
+      let totalQuantidadeSimulacao = 0;
+
+      for (let i = 0; i < table2.length; i++) {
+        const quantidadeSimulacao = parseFloat(table2[i].cells[4].querySelector('input').value);
+        const scoreSimulacao = table2[i].cells[5].querySelector('input').value;
+        const quantidadeProgramada = parseFloat(table2[i].cells[3].textContent);
+        const scoreProgramado = table2[i].cells[2].textContent;
+
+        let totalAbatePorHora = 0;
+        let velocidadePorMinuto = 0;
+
+        let totalAbatePorHoraProgramado = 0;
+
+        for (let j = 0; j < table1.length; j++) {
+          if (table1[j].cells[0].textContent === scoreSimulacao) {
+            totalAbatePorHora = parseFloat(table1[j].cells[3].textContent);
+            break;
+          }
+        }
+
+        for (let j = 0; j < table1.length; j++) {
+          if (table1[j].cells[0].textContent === scoreProgramado) {
+            totalAbatePorHoraProgramado = parseFloat(table1[j].cells[3].textContent);
+            break;
+          }
+        }
+
+        const tempoSimulacao = (quantidadeSimulacao / totalAbatePorHora) * 60;
+        const tempoProgramado = (quantidadeProgramada / totalAbatePorHoraProgramado) * 60;
+
+        console.log('Tempo de Simulação:', tempoSimulacao);
+        console.log('Tempo Programado:', tempoProgramado);
+
+        table2[i].cells[6].textContent = tempoSimulacao.toFixed(2);
+        table2[i].cells[7].textContent = tempoProgramado.toFixed(2);
+
+        totalTempoSimulacao += tempoSimulacao;
+        totalTempoProgramado += tempoProgramado;
+        totalQuantidadeProgramada += quantidadeProgramada;
+        totalQuantidadeSimulacao += quantidadeSimulacao;
+      }
+
+      document.getElementById('totalTempoSimulacao').textContent = totalTempoSimulacao.toFixed(2);
+      document.getElementById('totalTempoProgramado').textContent = totalTempoProgramado.toFixed(2);
+      document.getElementById('qtdAbateProg').textContent = totalQuantidadeProgramada.toFixed(2);
+      document.getElementById('qtdAbateSimulacao').textContent = totalQuantidadeSimulacao.toFixed(2);
+      document.getElementById('totalTempoProgramadoCampo').textContent = totalTempoProgramado.toFixed(2);
+      document.getElementById('totalTempoSimulacaoCampo').textContent = totalTempoSimulacao.toFixed(2);
+
+      const cargaHoraria = parseFloat(document.getElementById('cargaHoraria').value);
+      const tempoExtraProgramado = totalTempoProgramado - cargaHoraria;
+      const tempoExtraSimulado = totalTempoSimulacao - cargaHoraria;
+      document.getElementById('totalTempoProgramadoCampoExtra').textContent = tempoExtraProgramado.toFixed(2);
+      document.getElementById('totalTempoSimulacaoCampoExtra').textContent = tempoExtraSimulado.toFixed(2);
+      document.getElementById('totalTempoProgramadoCampoHoras').textContent = (totalTempoProgramado / 60).toFixed(2);
+      document.getElementById('totalTempoSimulacaoCampoHoras').textContent = (totalTempoSimulacao / 60).toFixed(2);
+      document.getElementById('totalTempoProgramadoCampoExtraHoras').textContent = (tempoExtraProgramado / 60).toFixed(2);
+      document.getElementById('totalTempoSimulacaoCampoExtraHoras').textContent = (tempoExtraSimulado / 60).toFixed(2);
+
+
+    }
+
+    document.getElementById('table2Body').addEventListener('input', calcularTempoSimulacao);
+
+    // Executa o cálculo ao carregar a página
+    window.onload = calcularTempoSimulacao;
+  </script>
+
+</body>
+</html>

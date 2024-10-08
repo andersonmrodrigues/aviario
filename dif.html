@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de DIF</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Análises</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Cadastros
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="user.html">Usuários</a></li>
+                <li><a class="dropdown-item" href="causes.html">Tipo de Causa</a></li>
+                <li><a class="dropdown-item" href="shed.html">Galpões</a></li>
+                <li><a class="dropdown-item" href="farmers.html">Integrados</a></li>
+                <li><a class="dropdown-item" href="analysis.html">Análises</a></li>
+                <li><a class="dropdown-item" href="planning.html">Planejamento</a></li>
+                <li><a class="dropdown-item" href="catch.html">Equipe de Apanho</a></li>
+                <li><a class="dropdown-item" href="config.html">Configuração</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="dif.html">DIF</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="inspection.html">Inspeção</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="result.html">Resultados</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <h1 class="text-center">Preenchimento de DIF</h1>
+      <button
+        type="button"
+        class="btn btn-primary mb-3"
+        data-bs-toggle="modal"
+        data-bs-target="#addDIFModal"
+      >
+        Adicionar DIF
+      </button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Lote</th>
+            <th scope="col">Equipe de Apanho</th>
+            <th scope="col">Data</th>
+            <th scope="col">Tipos de Causas</th>
+            <th scope="col">Score</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="difList">
+          <!-- DIFs pré-existentes -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal de Adicionar DIF -->
+    <div
+      class="modal fade"
+      id="addDIFModal"
+      tabindex="-1"
+      aria-labelledby="addDIFModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addDIFModalLabel">Adicionar DIF</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="difForm">
+              <div class="mb-3">
+                <label for="batch" class="form-label">Lote</label>
+                <input type="text" class="form-control" id="batch" required />
+              </div>
+              <div class="mb-3">
+                <label for="loader" class="form-label">Equipe de Apanho</label>
+                <select class="form-select" id="loader" required>
+                  <option value="Equipe de Apanho 1">Equipe de Apanho 1</option>
+                  <option value="Equipe de Apanho 2">Equipe de Apanho 2</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Data</label>
+                <input type="date" class="form-control" id="date" required />
+              </div>
+              <div class="mb-3">
+                <label for="analysis" class="form-label">Análise</label>
+                <select
+                  class="form-select"
+                  id="analysis"
+                  onchange="updateCauseTable()"
+                  required
+                >
+                  <option value="0">Análise 1</option>
+                  <option value="1">Análise 2</option>
+                </select>
+              </div>
+              <h5>Tipos de Causas</h5>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">#</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="causeList">
+                  <!-- Tipos de causas serão listados aqui -->
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th colspan="4">Total</th>
+                    <th id="totalAmount">0</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button type="button" class="btn btn-primary" onclick="saveDIF()">
+              Salvar DIF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Visualização de DIF -->
+    <div
+      class="modal fade"
+      id="viewDIFModal"
+      tabindex="-1"
+      aria-labelledby="viewDIFModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewDIFModalLabel">Detalhes do DIF</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h5 id="viewBatch"></h5>
+            <p id="viewLoader"></p>
+            <p id="viewDate"></p>
+            <h5>Tipos de Causas</h5>
+            <table class="table table-bordered" id="causesTypeTable">
+              <thead>
+                <tr>
+                  <th scope="col">Nome do Tipo de Causa</th>
+                  <th scope="col">#</th>
+                  <th scope="col">#</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody id="viewCauseList">
+                <!-- Detalhes das causas serão listados aqui -->
+              </tbody>
+            </table>
+            <h5>Score: <span id="">A</span></h5>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      let difs = [
+        {
+          batch: "Lote 1",
+          loader: "Equipe de Apanho 1",
+          date: "14/07/2024",
+          causes: [
+            { type: 0, quantity: 1, total: 1 },
+            { type: 1, quantity: 2, total: 2 },
+          ],
+        },
+      ];
+
+      let causes = [
+        { name: "Lesão de Pele", amountPerUnit: 10 },
+        { name: "Calo de Peito", amountPerUnit: 10 },
+      ];
+
+      function updateCauseTable() {
+        const causeList = document.getElementById("causeList");
+        const analysisIndex = document.getElementById("analysis").value;
+        causeList.innerHTML = ""; // Limpar a lista de causas
+        const selectedCauses = analysisIndex == 0 ? causes : []; // Atualize conforme a lógica desejada
+
+        selectedCauses.forEach((cause, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${cause.name}</td>
+            <td><button onclick="increase(${index})" type="button" class="btn btn-primary">+</button></td>
+            <td><button onclick="decrease(${index})" type="button" class="btn btn-warning">-</button></td>
+            <td><input type="number" class="form-control" id="causeQuantity${index}" oninput="calculateTotal(${index})" /></td>
+            <td id="causeTotal${index}">0</td>
+            <td>
+              <button class="btn btn-danger" onclick="removeCause(${index})">Remover</button>
+            </td>
+          `;
+          causeList.appendChild(row);
+        });
+      }
+
+      function increase(index) {
+        var value = document.getElementById(`causeQuantity${index}`).value;
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById(`causeTotal${index}`).textContent = value;
+        document.getElementById(`causeQuantity${index}`).value = value;
+        updateGrandTotal();
+      }
+
+      function decrease(index) {
+        var value = document.getElementById(`causeQuantity${index}`).value;
+        value = isNaN(value) ? 0 : value;
+        value < 1 ? (value = 0) : value--;
+        document.getElementById(`causeTotal${index}`).textContent = value;
+        document.getElementById(`causeQuantity${index}`).value = value;
+        updateGrandTotal();
+      }
+
+      function calculateTotal(index) {
+        const quantity = document.getElementById(`causeQuantity${index}`).value;
+        const totalElement = document.getElementById(`causeTotal${index}`);
+        totalElement.textContent = quantity;
+
+        updateGrandTotal();
+      }
+
+      function updateGrandTotal() {
+        let grandTotal = 0;
+        causes.forEach((_, index) => {
+          const total = document.getElementById(
+            `causeTotal${index}`
+          ).textContent;
+          grandTotal += parseFloat(total);
+        });
+        document.getElementById("totalAmount").textContent = grandTotal;
+      }
+
+      function removeCause(index) {
+        const causeList = document.getElementById("causeList");
+        causeList.deleteRow(index);
+        causes.splice(index, 1);
+        updateGrandTotal();
+      }
+
+      function saveDIF() {
+        const batch = document.getElementById("batch").value;
+        const loader = document.getElementById("loader").value;
+        const date = document.getElementById("date").value;
+        const analysis = document.getElementById("analysis").value;
+
+        const causeData = [];
+        causes.forEach((cause, index) => {
+          const quantity = document.getElementById(
+            `causeQuantity${index}`
+          ).value;
+          const total = document.getElementById(
+            `causeTotal${index}`
+          ).textContent;
+          causeData.push({ type: index, quantity: quantity, total: total });
+        });
+
+        const newDIF = { batch, loader, date, analysis, causes: causeData };
+        difs.push(newDIF);
+
+        document.getElementById("difForm").reset();
+        updateDIFList();
+        const modal = bootstrap.Modal.getInstance(
+          document.getElementById("addDIFModal")
+        );
+        modal.hide();
+      }
+
+      function updateDIFList() {
+        const difList = document.getElementById("difList");
+        difList.innerHTML = "";
+
+        difs.forEach((dif, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <th scope="row">${index + 1}</th>
+            <td>${dif.batch}</td>
+            <td>${dif.loader}</td>
+            <td>${dif.date}</td>
+            <td>
+              <ul>
+                ${dif.causes
+                  .map(
+                    (cause) =>
+                      `<li>${causes[cause.type].name}: ${
+                        cause.quantity
+                      } (Total: ${cause.total})</li>`
+                  )
+                  .join("")}
+              </ul>
+            </td>
+            <td>A</td>
+            <td>
+              <button class="btn btn-primary" onclick="viewDIF(${index})">Ver</button>
+            </td>
+          `;
+          difList.appendChild(row);
+        });
+      }
+
+      function calculatScore(causes) {
+        let score = 0;
+        causes.forEach((cause) => {
+          score += parseFloat(cause.total);
+        });
+        return score;
+      }
+
+      function viewDIF(index) {
+        const dif = difs[index];
+        document.getElementById("viewBatch").textContent = `Lote: ${dif.batch}`;
+        document.getElementById(
+          "viewLoader"
+        ).textContent = `Equipe de Apanho: ${dif.loader}`;
+        document.getElementById("viewDate").textContent = `Data: ${dif.date}`;
+
+        const viewCauseList = document.getElementById("viewCauseList");
+        viewCauseList.innerHTML = dif.causes
+          .map(
+            (cause) =>
+              `<tr>
+                <td>${causes[cause.type].name}</td>
+                <td></td>
+                <td></td>
+                <td>${cause.quantity}</td>
+                <td>${cause.total}</td></tr>`
+          )
+          .join("");
+
+        const modal = new bootstrap.Modal(
+          document.getElementById("viewDIFModal")
+        );
+        modal.show();
+      }
+
+      // Inicializar a lista de DIFs
+      updateDIFList();
+      updateCauseTable();
+    </script>
+  </body>
+</html>
